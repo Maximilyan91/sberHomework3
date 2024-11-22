@@ -5,17 +5,39 @@ public class Main {
     public static void main(String[] args) {
 
         CountMap<String> cmap = new CountMapImpl<>();
+        CountMap<String> source = new CountMapImpl<>();
+
+        cmap.add("1");
+        cmap.add("2");
+        cmap.add("2");
+        cmap.add("2");
+        cmap.add("3");
+        cmap.add("3");
+        cmap.add("3");
+        cmap.add("3");
+
+        cmap.remove("3");
+        cmap.remove("1");
+
+        source.add("1");
+        source.add("2");
+        source.add("2");
+        source.add("3");
+        source.add("3");
+        source.add("3");
+        source.add("4");
+        source.add("4");
+        source.add("4");
+        source.add("4");
+        source.add("0");
 
         System.out.println();
-        cmap.add("g");
-        cmap.add("r");
-        cmap.add("g");
-        cmap.add("g");
-        cmap.add("f");
-        cmap.add("f");
-        cmap.add("fa");
-        cmap.add("fq");
 
+
+        System.out.println("cmap " + cmap.toMap());
+
+        cmap.addAll((source));
+        System.out.println(source.toMap());
         System.out.println(cmap.toMap());
     }
 }

@@ -6,7 +6,7 @@ import java.util.Set;
 
 public class CountMapImpl<T> implements CountMap<T> {
 
-    private Map<T, Integer> count;
+    private final Map<T, Integer> count;
 
     public CountMapImpl() {
         count = new HashMap<>();
@@ -14,24 +14,23 @@ public class CountMapImpl<T> implements CountMap<T> {
 
     @Override
     public void add(T t) {
-        if (!count.containsKey(t)) {
-            count.put(t, 1);
-        } else {
-            count.replace(t, count.get(t) + 1);
-        }
+        int value = count.getOrDefault(t, 0);
+        count.put(t, value + 1);
     }
 
     @Override
     public int getCount(T t) {
-        return count.getOrDefault(t, -1);
+        return count.getOrDefault(t, 0);
     }
 
     @Override
     public int remove(T t) {
-        if (count.containsKey(t)) {
-            return count.remove(t);
+        int value = count.getOrDefault(t, 0);
+
+        if (value > 1) {
+            return count.put(t, value - 1);
         } else {
-            return -1;
+           return count.remove(t);
         }
     }
 
@@ -39,11 +38,20 @@ public class CountMapImpl<T> implements CountMap<T> {
     public int size() {
         return count.size();
     }
-//Добавить все элементы из source в текущий контейнер,
-    // при совпадении ключей,     суммировать значения
+
     @Override
     public void addAll(CountMap<? extends T> source) {
         Set<? extends Map.Entry<? extends T, Integer>> entries = source.toMap().entrySet();
+
+        for (Map.Entry<? extends T, Integer> entry : entries) {
+            T key = entry.getKey();
+
+            if (count.containsKey(key)) {
+                count.put(key, count.get(key) + entry.getValue());
+            } else {
+                count.put(key, entry.getValue());
+            }
+        }
     }
 
     @Override
@@ -53,6 +61,6 @@ public class CountMapImpl<T> implements CountMap<T> {
 
     @Override
     public void toMap(Map<T, Integer> destination) {
- //       destination.putAll(count);
+            destination.putAll(count);
     }
 }
