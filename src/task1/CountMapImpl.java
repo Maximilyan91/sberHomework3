@@ -61,6 +61,7 @@ public class CountMapImpl<T> implements CountMap<T> {
 
     @Override
     public void toMap(Map<T, Integer> destination) {
-            destination.putAll(count);
+       destination.clear();
+       destination.putAll(count);
     }
 }
