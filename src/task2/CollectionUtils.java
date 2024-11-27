@@ -12,11 +12,11 @@ public class CollectionUtils {
     }
 
     public static <T> int indexOf(List<? extends T> source, Object o) {
-       return source.indexOf(o);
+        return source.indexOf(o);
     }
 
     public static <T> List limit(List<? extends T> source, int size) {
-       return source.subList(0, size);
+        return source.subList(0, size);
     }
 
     public static <T> void add(List<? super T> source, T o) {
@@ -28,7 +28,7 @@ public class CollectionUtils {
     }
 
     public static <T> boolean containsAll(List<? extends T> c, List<? extends T> c2) {
-       return new HashSet<>(c).containsAll(c2);
+        return new HashSet<>(c).containsAll(c2);
     }
 
     public static <T> boolean containsAny(List<? extends T> c1, List<? extends T> c2) {
@@ -40,9 +40,28 @@ public class CollectionUtils {
         return false;
     }
 
-    public static List range(List list, Object min, Object max) {
+    public static <T extends Comparable<? super T>> List<T> range(List<T> list, T min, T max) {
+        List<T> result = newArrayList();
+        if (!containsAll(list, Arrays.asList(min, max))) {
+            return newArrayList();
+        }
+        for (T t : list) {
+            if (t.compareTo(min) >= 0 && t.compareTo(max) <= 0) {
+                result.add(t);
+            }
+        }
+        result.sort(Comparator.naturalOrder());
+        return result;
     }
 
-    public static List range(List list, Object min, Object max, Comparator comparator) {
+    public static <T> List<T> range(List<T> list, T min, T max, Comparator<? super T> comparator) {
+        List<T> result = newArrayList();
+        for (T item : list) {
+            if (comparator.compare(item, min) >= 0 && comparator.compare(item, max) <= 0) {
+                result.add(item);
+            }
+        }
+        result.sort(comparator);
+        return result;
     }
 }
