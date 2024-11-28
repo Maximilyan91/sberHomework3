@@ -45,9 +45,9 @@ public class CollectionUtils {
         if (!containsAll(list, Arrays.asList(min, max))) {
             return newArrayList();
         }
-        for (T t : list) {
-            if (t.compareTo(min) >= 0 && t.compareTo(max) <= 0) {
-                result.add(t);
+        for (T element : list) {
+            if (element.compareTo(min) >= 0 && element.compareTo(max) <= 0) {
+                result.add(element);
             }
         }
         result.sort(Comparator.naturalOrder());
@@ -56,9 +56,9 @@ public class CollectionUtils {
 
     public static <T> List<T> range(List<T> list, T min, T max, Comparator<? super T> comparator) {
         List<T> result = newArrayList();
-        for (T item : list) {
-            if (comparator.compare(item, min) >= 0 && comparator.compare(item, max) <= 0) {
-                result.add(item);
+        for (T element : list) {
+            if (comparator.compare(element, min) >= 0 && comparator.compare(element, max) <= 0) {
+                result.add(element);
             }
         }
         result.sort(comparator);

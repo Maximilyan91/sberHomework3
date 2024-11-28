@@ -1,7 +1,6 @@
-import task1.CountMap;
-import task1.CountMapImpl;
+package task1;
 
-public class Main {
+public class Task1App {
     public static void main(String[] args) {
 
         CountMap<String> cmap = new CountMapImpl<>();
